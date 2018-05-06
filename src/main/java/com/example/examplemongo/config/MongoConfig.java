@@ -14,9 +14,12 @@ public class MongoConfig extends AbstractMongoConfiguration  {
 	@Value( "${com.example.database.name}" )
 	private String databaseName;
 	
+	@Value( "${com.example.database.host}" )
+	private String host;
+	
 	@Override
 	public MongoClient mongoClient() {
-		MongoClient mongoClient = new MongoClient("127.0.0.1",27017);
+		MongoClient mongoClient = new MongoClient(host,27017);
 		return mongoClient;
 	}
 
