@@ -5,23 +5,27 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.examplemongo.dao.AnimeDao;
 import com.example.examplemongo.dto.AnimeDto;
 
+import io.swagger.annotations.Api;
+@CrossOrigin(origins = "*")
+@Api
 @RestController 
 public class MainController {
 
 	@Autowired
 	AnimeDao animeDao;
 	
-	@RequestMapping(name="/Anime")
+	@GetMapping(value="/Anime")
 	public ResponseEntity<List<AnimeDto>> getAnimes(){
 		
 		ResponseEntity<List<AnimeDto>> response = new ResponseEntity<List<AnimeDto>>(animeDao.findAll(), HttpStatus.OK);  
@@ -30,7 +34,7 @@ public class MainController {
 	}
 	
 	@SuppressWarnings({ "rawtypes", "static-access" })
-	@RequestMapping(name="/Anime",method=RequestMethod.POST)
+	@RequestMapping(value="/Anime",method=RequestMethod.POST)
 	public ResponseEntity insertAnime(@RequestBody AnimeDto animeDto){
 				
 		try {
@@ -42,7 +46,7 @@ public class MainController {
 
 	}
 	
-	@RequestMapping(name="/Anime",method=RequestMethod.PATCH)
+	@RequestMapping(value="/Anime",method=RequestMethod.PATCH)
 	public ResponseEntity updateAnime(@RequestBody AnimeDto animeDto){
 				
 		try {
@@ -55,7 +59,7 @@ public class MainController {
 	}
 	
 	@RequestMapping(value="/Anime/{animeId}",method=RequestMethod.DELETE)
-	public ResponseEntity insertAnime(@PathVariable String animeId){
+	public ResponseEntity deleteAnime(@PathVariable String animeId){
 				
 		try {
 			animeDao.deleteAnime(animeId);
